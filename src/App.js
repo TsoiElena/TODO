@@ -4,11 +4,12 @@ import './App.css'
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import TaskList from "./components/TaskList/TaskList";
-import {type} from "@testing-library/user-event/dist/type";
 
 const DONE = 'completed';
 const EDIT = 'editing';
 const ACTIVE = 'active';
+
+let idCounter = 100;
 
 export default class App extends Component {
     constructor(props) {
@@ -19,7 +20,9 @@ export default class App extends Component {
                 {id: 2, className: EDIT, description: 'Editing task', created:'created 5 minutes ago', editing: true, done: false},
                 {id: 3, className: ACTIVE, description: 'Active task', created:'created 5 minutes ago', editing: false, done: false},
             ],
+            filter: 'all'
         };
+
         this.deleteTask = (id) => {
             this.setState(({tasks}) => {
                 return {
@@ -43,19 +46,53 @@ export default class App extends Component {
                 return {tasks: newTasks}
             })
         };
+        this.addNewTask = (label) => {
+            this.createTask(label)
+        }
+        this.createTask = (label) => {
+            idCounter++
+            const newTask = {
+                id: idCounter,
+                className: ACTIVE,
+                description: label,
+                created: 'created 5 minutes ago',
+                editing: false,
+                done: false
+            }
+
+            this.setState(({tasks}) => {
+                return {
+                    tasks: [...tasks, newTask]
+                }
+            })
+        }
+        this.handleFilter = (filter) => {
+            this.setState({
+                filter: filter
+            })
+        }
+        this.clearCompleted = () => {
+            this.setState(({tasks})=>{
+                const newTasks = tasks.filter(task => task.done === false)
+                return {
+                    tasks: newTasks
+                }
+            })
+        }
     }
 
 
     render () {
-        const {tasks} = this.state
+        const {tasks, filter} = this.state
+        const leftItems = tasks.filter((task) => task.done === false).length
         return (
             <div className="todoapp">
-                <Header/>
+                <Header addNewTask={this.addNewTask}/>
                 <div className="main">
-                    <TaskList tasks={tasks}
+                    <TaskList tasks={tasks} filter={filter}
                         onDeleted={this.deleteTask} handleDone={this.handleDone}
                     />
-                    <Footer/>
+                    <Footer leftItems={leftItems} handleFilter={this.handleFilter} clear={this.clearCompleted}/>
                 </div>
             </div>
         )

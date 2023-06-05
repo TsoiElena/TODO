@@ -1,14 +1,17 @@
 import React from "react";
+import PropTypes from 'prop-types'
+
 import './TaskList.css'
 import Task from "../Task/Task";
 
-const TaskList = ({tasks, onDeleted, handleDone, filter}) => {
+const TaskList = ({tasks, onDeleted, handleDone, filter, onEdit, descChanged}) => {
     const taskList = tasks.map(task => {
         const {id, className, ...props} = task
         const el = (
             <li className={className} key={id}>
                 <Task {...props}
-                      onDeleted={() => onDeleted(id)} handleDone={()=> handleDone(id)}
+                      onDeleted={() => onDeleted(id)} handleDone={()=> handleDone(id)} onEdit={()=>onEdit(id)}
+                      descChanged={(name)=>descChanged(id,name)}
                 />
             </li>
         )
@@ -24,3 +27,21 @@ const TaskList = ({tasks, onDeleted, handleDone, filter}) => {
 }
 
 export default TaskList
+
+TaskList.defaultProps = {
+    tasks: [],
+    onDeleted: ()=>{},
+    handleDone: ()=>{},
+    filter: 'all',
+    onEdit: ()=>{},
+    descChanged: ()=>{}
+}
+
+TaskList.propsType = {
+    tasks: PropTypes.arrayOf(PropTypes.object),
+    onDeleted: PropTypes.func,
+    handleDone: PropTypes.func,
+    filter: PropTypes.string,
+    onEdit: PropTypes.func,
+    descChanged: PropTypes.func
+}

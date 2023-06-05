@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types'
+
 import NewTaskForm from "../NewTaskForm/NewTaskForm";
 
 const Header = ({addNewTask}) => {
@@ -8,6 +10,14 @@ const Header = ({addNewTask}) => {
             <NewTaskForm addNewTask={addNewTask}/>
         </header>
     )
+}
+
+Header.defaultProps = {
+    addNewTask: ()=>{}
+}
+
+Header.propTypes = {
+    addNewTask: PropTypes.func
 }
 
 export default Header

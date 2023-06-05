@@ -16,9 +16,9 @@ export default class App extends Component {
         super(props);
         this.state = {
             tasks: [
-                {id: 1, className: DONE, description: 'Completed task', created:'created 17 seconds ago', editing: false, done: true},
-                {id: 2, className: EDIT, description: 'Editing task', created:'created 5 minutes ago', editing: true, done: false},
-                {id: 3, className: ACTIVE, description: 'Active task', created:'created 5 minutes ago', editing: false, done: false},
+                {id: 1, className: DONE, description: 'Completed task', created: new Date(), editing: false, done: true},
+                {id: 2, className: ACTIVE, description: 'Editing task', created: new Date() , editing: false, done: false},
+                {id: 3, className: ACTIVE, description: 'Active task', created: new Date() , editing: false, done: false},
             ],
             filter: 'all'
         };
@@ -55,11 +55,10 @@ export default class App extends Component {
                 id: idCounter,
                 className: ACTIVE,
                 description: label,
-                created: 'created 5 minutes ago',
+                created: new Date(),
                 editing: false,
                 done: false
             }
-
             this.setState(({tasks}) => {
                 return {
                     tasks: [...tasks, newTask]
@@ -79,6 +78,31 @@ export default class App extends Component {
                 }
             })
         }
+        this.onEdit = (id) => {
+            this.setState(({tasks}) => {
+                const newTasks = tasks.map(task => {
+                    if(task.id === id) {
+                        task.className = EDIT
+                        task.editing = true
+                    }
+                    return task
+                })
+                return {tasks: newTasks}
+            })
+        }
+        this.descriptionChanged = (id, name) => {
+            this.setState(({tasks}) => {
+                const newTasks = tasks.map(task => {
+                    if(task.id === id) {
+                        task.done ? task.className = DONE : task.className = ACTIVE
+                        task.editing = false
+                        task.description = name
+                    }
+                    return task
+                })
+                return {tasks: newTasks}
+            })
+        }
     }
 
 
@@ -90,7 +114,8 @@ export default class App extends Component {
                 <Header addNewTask={this.addNewTask}/>
                 <div className="main">
                     <TaskList tasks={tasks} filter={filter}
-                        onDeleted={this.deleteTask} handleDone={this.handleDone}
+                        onDeleted={this.deleteTask} handleDone={this.handleDone} onEdit={this.onEdit}
+                              descChanged={this.descriptionChanged}
                     />
                     <Footer leftItems={leftItems} handleFilter={this.handleFilter} clear={this.clearCompleted}/>
                 </div>
@@ -98,24 +123,3 @@ export default class App extends Component {
         )
     }
 }
-
-/*const App = () => {
-
-    const tasks = [
-        {id: 1, description: 'Completed task', created:'created 17 seconds ago'},
-        {id: 2, description: 'Editing task', created:'created 5 minutes ago'},
-        {id: 3, description: 'Active task', created:'created 5 minutes ago'},
-    ]
-
-  return (
-      <div className="todoapp">
-          <Header/>
-          <div className="main">
-              <TaskList tasks={tasks} onDeleted={(id)=>console.log('del ', id)}/>
-              <Footer/>
-          </div>
-      </div>
-  )
-}
-
-export default App*/

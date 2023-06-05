@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import PropTypes from 'prop-types'
 import './TasksFilter.css'
 
 const SELECTED = 'selected'
@@ -55,5 +56,12 @@ export default class TasksFilter extends Component {
                 </li>
             </ul>
         )
+    }
+    static defaultPtops = {
+        handlefilter: ()=>{}
+    }
+
+    static propTypes = {
+        handlefilter: PropTypes.func
     }
 }

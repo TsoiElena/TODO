@@ -1,11 +1,11 @@
-import React, {Component} from "react";
+import React, {Component} from "react"
 import {formatDistanceToNow} from 'date-fns'
 import PropTypes from 'prop-types'
 
 
 export default class Task extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             editingValue: this.props.description,
             createdValue: 'created ' + formatDistanceToNow(this.props.created, {includeSeconds: true, addSuffix: true}),

@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component} from "react"
 import PropTypes from 'prop-types'
 import './TasksFilter.css'
 
@@ -6,7 +6,7 @@ const SELECTED = 'selected'
 
 export default class TasksFilter extends Component {
     constructor() {
-        super();
+        super()
         this.state = {
             all: SELECTED,
             active: '',
@@ -31,7 +31,7 @@ export default class TasksFilter extends Component {
                 this.props.handlefilter('active')
             }
             if (text !== 'Completed') {
-                return;
+                return
             }
             this.setState({
                 all: '',

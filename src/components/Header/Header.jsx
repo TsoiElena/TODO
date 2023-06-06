@@ -1,23 +1,23 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import NewTaskForm from '../NewTaskForm/NewTaskForm'
+import NewTaskForm from '../NewTaskForm/NewTaskForm';
 
 function Header({ addNewTask }) {
-    return (
-      <header className="header">
-        <h1>todos</h1>
-        <NewTaskForm addNewTask={addNewTask} />
-      </header>
-    )
+  return (
+    <header className="header">
+      <h1>todos</h1>
+      <NewTaskForm addNewTask={addNewTask} />
+    </header>
+  );
 }
 
 Header.defaultProps = {
-    addNewTask: () => {},
-}
+  addNewTask: () => {},
+};
 
 Header.propTypes = {
-    addNewTask: PropTypes.func,
-}
+  addNewTask: PropTypes.func,
+};
 
-export default Header
+export default Header;

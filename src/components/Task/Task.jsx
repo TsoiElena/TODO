@@ -48,11 +48,11 @@ export default class Task extends Component {
           <button className="icon icon-edit" onClick={onEdit} />
           <button className="icon icon-destroy" onClick={onDeleted} />
         </div>
-        {editing ? (
+        {editing && (
           <form onSubmit={this.descChange}>
             <input type="text" className="edit" value={editingValue} onChange={this.editing} />
           </form>
-        ) : null}
+        )}
       </>
     );
   }

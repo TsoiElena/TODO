@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './TasksFilter.css';
 
-const SELECTED = 'selected';
-
 export default class TasksFilter extends Component {
   constructor() {
     super();
     this.state = {
-      all: SELECTED,
+      all: 'selected',
       active: '',
       complete: '',
     };
@@ -16,7 +14,7 @@ export default class TasksFilter extends Component {
       const text = e.target.innerText;
       if (text === 'All') {
         this.setState({
-          all: SELECTED,
+          all: 'selected',
           active: '',
           complete: '',
         });
@@ -25,7 +23,7 @@ export default class TasksFilter extends Component {
       if (text === 'Active') {
         this.setState({
           all: '',
-          active: SELECTED,
+          active: 'selected',
           complete: '',
         });
         this.props.handlefilter('active');
@@ -36,7 +34,7 @@ export default class TasksFilter extends Component {
       this.setState({
         all: '',
         active: '',
-        complete: SELECTED,
+        complete: 'selected',
       });
       this.props.handlefilter('completed');
     };

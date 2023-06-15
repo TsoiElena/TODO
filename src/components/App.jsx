@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import './App.css';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import TaskList from './TaskList/TaskList';
-
-const DONE = 'completed';
-const EDIT = 'editing';
-const ACTIVE = 'active';
-
-let idCounter = 100;
 
 export default class App extends Component {
   constructor(props) {
@@ -18,7 +13,7 @@ export default class App extends Component {
       tasks: [
         {
           id: 1,
-          className: DONE,
+          className: 'completed',
           description: 'Completed task',
           created: new Date(),
           editing: false,
@@ -26,7 +21,7 @@ export default class App extends Component {
         },
         {
           id: 2,
-          className: ACTIVE,
+          className: 'active',
           description: 'Editing task',
           created: new Date(),
           editing: false,
@@ -34,7 +29,7 @@ export default class App extends Component {
         },
         {
           id: 3,
-          className: ACTIVE,
+          className: 'active',
           description: 'Active task',
           created: new Date(),
           editing: false,
@@ -55,9 +50,9 @@ export default class App extends Component {
           if (task.id === id) {
             task.done = !task.done;
             if (task.done) {
-              task.className = DONE;
+              task.className = 'completed';
             } else {
-              task.className = ACTIVE;
+              task.className = 'active';
             }
           }
           return task;
@@ -69,10 +64,9 @@ export default class App extends Component {
       this.createTask(label);
     };
     this.createTask = (label) => {
-      idCounter++;
       const newTask = {
-        id: idCounter,
-        className: ACTIVE,
+        id: uuidv4(),
+        className: 'active',
         description: label,
         created: new Date(),
         editing: false,
@@ -99,7 +93,7 @@ export default class App extends Component {
       this.setState(({ tasks }) => {
         const newTasks = tasks.map((task) => {
           if (task.id === id) {
-            task.className = EDIT;
+            task.className = 'editing';
             task.editing = true;
           }
           return task;
@@ -111,7 +105,7 @@ export default class App extends Component {
       this.setState(({ tasks }) => {
         const newTasks = tasks.map((task) => {
           if (task.id === id) {
-            task.className = task.done ? DONE : ACTIVE;
+            task.className = task.done ? 'completed' : 'active';
             task.editing = false;
             task.description = name;
           }

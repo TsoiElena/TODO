@@ -1,3 +1,2 @@
-vercel deploy: https://vercel.com/tsoielena/todos/ByexJrqNeZ4zz5ZVFXk9uVrfcSES
-
-vercel app: https://todos-gyanz9mpb-tsoielena.vercel.app/
+vercel deploy: https://vercel.com/tsoielena/todos/A6Pfi9opxCMiHfKBTgXhqf8NjgAT
+vercel app: https://todos-msrvounvg-tsoielena.vercel.app/

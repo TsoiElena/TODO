@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './TaskList.css';
 import Task from '../Task/Task';
 
 function TaskList({ tasks, onDeleted, handleDone, filter, onEdit, descChanged }) {

@@ -14,10 +14,12 @@ export default class App extends Component {
         {
           id: 1,
           className: 'completed',
-          description: 'Completed task',
+          description: 'Completed',
           created: new Date(),
           editing: false,
           done: true,
+          min: 12,
+          sec: 25,
         },
         {
           id: 2,
@@ -26,6 +28,8 @@ export default class App extends Component {
           created: new Date(),
           editing: false,
           done: false,
+          min: 12,
+          sec: 25,
         },
         {
           id: 3,
@@ -34,6 +38,8 @@ export default class App extends Component {
           created: new Date(),
           editing: false,
           done: false,
+          min: 12,
+          sec: 25,
         },
       ],
       filter: 'all',
@@ -60,10 +66,10 @@ export default class App extends Component {
         return { tasks: newTasks };
       });
     };
-    this.addNewTask = (label) => {
-      this.createTask(label);
+    this.addNewTask = (label, min, sec) => {
+      this.createTask(label, min, sec);
     };
-    this.createTask = (label) => {
+    this.createTask = (label, min, sec) => {
       const newTask = {
         id: uuidv4(),
         className: 'active',
@@ -71,6 +77,8 @@ export default class App extends Component {
         created: new Date(),
         editing: false,
         done: false,
+        min: min ? min : 0,
+        sec: sec ? sec : 0,
       };
       this.setState(({ tasks }) => ({
         tasks: [...tasks, newTask],

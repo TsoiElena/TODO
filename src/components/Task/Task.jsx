@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
+
+import Timer from '../Timer/Timer';
 
 export default class Task extends Component {
   constructor(props) {
     super(props);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.startTimer = this.startTimer.bind(this);
     this.state = {
       editingValue: this.props.description,
       createdValue: 'created ' + formatDistanceToNow(this.props.created, { includeSeconds: true, addSuffix: true }),
+      min: this.props.min,
+      sec: this.props.sec,
+      timeLeft: this.props.min * 60 + this.props.sec,
     };
     this.editing = (e) => {
       this.setState({
@@ -25,25 +32,46 @@ export default class Task extends Component {
     };
   }
 
+  startTimer() {
+    this.timerID = setInterval(() => {
+      let timerLeft = this.state.timeLeft - 1;
+      if (timerLeft <= 0) {
+        clearInterval(this.timerID);
+      }
+      this.setState({
+        timeLeft: timerLeft,
+        min: (timerLeft - (timerLeft % 60)) / 60,
+        sec: timerLeft % 60,
+      });
+    }, 1000);
+  }
+
+  stopTimer() {
+    clearInterval(this.timerID);
+  }
+
   componentDidMount() {
-    this.timerId = setInterval(() => this.tick(), 1000);
+    this.createdId = setInterval(() => this.tick(), 1000);
+    if (this.state.timeLeft) this.startTimer();
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerId);
+    clearInterval(this.createdId);
+    this.stopTimer();
   }
 
   render() {
     const { description, editing, onDeleted, handleDone, done, onEdit } = this.props;
-    const { editingValue, createdValue } = this.state;
+    const { editingValue, createdValue, min, sec } = this.state;
 
     return (
       <>
         <div className="view">
           <input className="toggle" type="checkbox" onChange={handleDone} checked={done} />
           <label>
-            <span className="description">{description}</span>
-            <span className="created">{createdValue}</span>
+            <span className="title">{description}</span>
+            <Timer min={min} sec={sec} stopTimer={this.stopTimer} startTimer={this.startTimer} />
+            <span className="description">{createdValue}</span>
           </label>
           <button className="icon icon-edit" onClick={onEdit} />
           <button className="icon icon-destroy" onClick={onDeleted} />
@@ -65,6 +93,8 @@ Task.defaultProps = {
   handleDone: () => {},
   done: false,
   onEdit: () => {},
+  min: 0,
+  sec: 0,
 };
 Task.propTypes = {
   description: PropTypes.string,
@@ -73,4 +103,6 @@ Task.propTypes = {
   handleDone: PropTypes.func,
   done: PropTypes.bool,
   onEdit: PropTypes.func,
+  min: number,
+  sec: number,
 };

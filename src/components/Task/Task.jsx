@@ -52,7 +52,6 @@ export default class Task extends Component {
 
   componentDidMount() {
     this.createdId = setInterval(() => this.tick(), 1000);
-    if (this.state.timeLeft) this.startTimer();
   }
 
   componentWillUnmount() {

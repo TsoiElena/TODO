@@ -6,8 +6,8 @@ export default class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      start: true,
-      stop: false,
+      start: false,
+      stop: true,
     };
     this.play = () => {
       this.setState({

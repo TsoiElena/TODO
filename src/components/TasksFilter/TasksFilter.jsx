@@ -1,67 +1,64 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './TasksFilter.css';
 
-export default class TasksFilter extends Component {
-  constructor() {
-    super();
-    this.state = {
-      all: 'selected',
-      active: '',
-      complete: '',
-    };
-    this.onClick = (e) => {
-      const text = e.target.innerText;
-      if (text === 'All') {
-        this.setState({
-          all: 'selected',
-          active: '',
-          complete: '',
-        });
-        this.props.handlefilter('all');
-      }
-      if (text === 'Active') {
-        this.setState({
-          all: '',
-          active: 'selected',
-          complete: '',
-        });
-        this.props.handlefilter('active');
-      }
-      if (text !== 'Completed') {
-        return;
-      }
-      this.setState({
-        all: '',
+const TasksFilter = ({ handlefilter }) => {
+  const [state, setState] = useState({
+    all: 'selected',
+    active: '',
+    complete: '',
+  });
+
+  const onClick = (e) => {
+    const text = e.target.innerText;
+    if (text === 'All') {
+      setState({
+        all: 'selected',
         active: '',
-        complete: 'selected',
+        complete: '',
       });
-      this.props.handlefilter('completed');
-    };
-  }
-  render() {
-    const { all, active, complete } = this.state;
-    return (
-      <ul className="filters">
-        <li>
-          <button className={all} onClick={this.onClick}>
-            All
-          </button>
-        </li>
-        <li>
-          <button className={active} onClick={this.onClick}>
-            Active
-          </button>
-        </li>
-        <li>
-          <button className={complete} onClick={this.onClick}>
-            Completed
-          </button>
-        </li>
-      </ul>
-    );
-  }
-}
+      handlefilter('all');
+    }
+    if (text === 'Active') {
+      setState({
+        all: '',
+        active: 'selected',
+        complete: '',
+      });
+      handlefilter('active');
+    }
+    if (text !== 'Completed') {
+      return;
+    }
+    setState({
+      all: '',
+      active: '',
+      complete: 'selected',
+    });
+    handlefilter('completed');
+  };
+  return (
+    <ul className="filters">
+      <li>
+        <button className={state.all} onClick={onClick}>
+          All
+        </button>
+      </li>
+      <li>
+        <button className={state.active} onClick={onClick}>
+          Active
+        </button>
+      </li>
+      <li>
+        <button className={state.complete} onClick={onClick}>
+          Completed
+        </button>
+      </li>
+    </ul>
+  );
+};
+
+export default TasksFilter;
 
 TasksFilter.defaultPtops = {
   handlefilter: () => {},

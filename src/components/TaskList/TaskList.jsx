@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Task from '../Task/Task';
 
-function TaskList({ tasks, onDeleted, handleDone, filter, onEdit, descChanged }) {
+const TaskList = ({ tasks, onDeleted, handleDone, filter, onEdit, descChanged }) => {
   const taskList = tasks.map((task) => {
     const { id, className, ...props } = task;
     const el = (
@@ -22,7 +22,7 @@ function TaskList({ tasks, onDeleted, handleDone, filter, onEdit, descChanged })
     if (filter === 'completed' && task.done) return el;
   });
   return <ul className="todo-list">{taskList}</ul>;
-}
+};
 
 export default TaskList;
 

@@ -17,10 +17,12 @@ const NewTaskForm: React.FC<NewTaskForm> = ({ addNewTask }) => {
     setState((state) => ({ ...state, label: String(e.target.value) }));
   };
   const onMinChange = (e: any) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setState((state) => ({ ...state, min: Number(e.target.value) }));
   };
   const onSecChange = (e: any) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setState((state) => ({ ...state, sec: Number(e.target.value) }));
   };

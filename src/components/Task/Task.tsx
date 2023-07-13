@@ -66,6 +66,7 @@ const Task: React.FC<TaskProps> = ({
         secT: (state.timeLeft - 1) % 60,
       }));
     }, 1000);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setTimerId(timerID);
   };

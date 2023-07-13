@@ -1,10 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import './Footer.css';
+import '../App.css';
 import TasksFilter from '../TasksFilter/TasksFilter';
 
-function Footer({ leftItems, handleFilter, clear }) {
+type FooterProps = {
+  leftItems: number;
+  handleFilter: (f: string) => void;
+  clear: () => void;
+};
+
+const Footer: React.FC<FooterProps> = ({ leftItems, handleFilter, clear }) => {
   return (
     <footer className="footer">
       <span className="todo-count">{leftItems} items left</span>
@@ -14,18 +19,6 @@ function Footer({ leftItems, handleFilter, clear }) {
       </button>
     </footer>
   );
-}
-
-Footer.defaultProps = {
-  leftItems: 0,
-  handleFilter: () => {},
-  clear: () => {},
-};
-
-Footer.propTypes = {
-  leftItems: PropTypes.number,
-  handleFilter: PropTypes.func,
-  clear: PropTypes.func,
 };
 
 export default Footer;

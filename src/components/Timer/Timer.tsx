@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 
 import '../App.css';
 
-const Timer = ({ min, sec, startTimer, stopTimer }) => {
+type TimerProps = {
+  min: number;
+  sec: number;
+  startTimer: () => void;
+  stopTimer: () => void;
+};
+
+const Timer: React.FC<TimerProps> = ({ min, sec, startTimer, stopTimer }) => {
   const [state, setState] = useState({
     start: false,
     stop: true,
@@ -23,8 +30,8 @@ const Timer = ({ min, sec, startTimer, stopTimer }) => {
     stopTimer();
   };
 
-  let timerM = min;
-  let timerS = sec;
+  let timerM: string | number = min;
+  let timerS: string | number = sec;
   if (timerM - (timerM % 10) === 0) timerM = `0${timerM}`;
   if (timerS - (timerS % 10) === 0) timerS = `0${timerS}`;
   return (
@@ -37,8 +44,3 @@ const Timer = ({ min, sec, startTimer, stopTimer }) => {
 };
 
 export default Timer;
-
-Timer.defaultProps = {
-  min: 0,
-  sec: 0,
-};

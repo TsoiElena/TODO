@@ -1,10 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import PropTypes, { number } from 'prop-types';
 
+import '../App.css';
 import Timer from '../Timer/Timer';
 
-const Task = ({ description, editing, onDeleted, handleDone, done, onEdit, min, sec, created, descChanged }) => {
+type TaskProps = {
+  description: string;
+  editing: boolean;
+  onDeleted: () => void;
+  handleDone: () => void;
+  done: boolean;
+  onEdit: () => void;
+  min: number;
+  sec: number;
+  created: any;
+  descChanged: (s: string) => void;
+};
+
+const Task: React.FC<TaskProps> = ({
+  description,
+  editing,
+  onDeleted,
+  handleDone,
+  done,
+  onEdit,
+  min,
+  sec,
+  created,
+  descChanged,
+}) => {
   const [state, setState] = useState({
     editingValue: description,
     createdValue: 'created ' + formatDistanceToNow(created, { includeSeconds: true, addSuffix: true }),
@@ -13,11 +37,11 @@ const Task = ({ description, editing, onDeleted, handleDone, done, onEdit, min, 
     timeLeft: min * 60 + sec,
   });
 
-  const handleEditing = (e) => {
+  const handleEditing = (e: any) => {
     setState((state) => ({ ...state, editingValue: e.target.value }));
   };
 
-  const descChange = (e) => {
+  const descChange = (e: any) => {
     e.preventDefault();
     descChanged(state.editingValue);
   };
@@ -42,6 +66,7 @@ const Task = ({ description, editing, onDeleted, handleDone, done, onEdit, min, 
         secT: (state.timeLeft - 1) % 60,
       }));
     }, 1000);
+    // @ts-ignore
     setTimerId(timerID);
   };
 
@@ -79,24 +104,3 @@ const Task = ({ description, editing, onDeleted, handleDone, done, onEdit, min, 
 };
 
 export default Task;
-
-Task.defaultProps = {
-  description: '',
-  editing: false,
-  onDeleted: () => {},
-  handleDone: () => {},
-  done: false,
-  onEdit: () => {},
-  min: 0,
-  sec: 0,
-};
-Task.propTypes = {
-  description: PropTypes.string,
-  editing: PropTypes.bool,
-  onDeleted: PropTypes.func,
-  handleDone: PropTypes.func,
-  done: PropTypes.bool,
-  onEdit: PropTypes.func,
-  min: number,
-  sec: number,
-};

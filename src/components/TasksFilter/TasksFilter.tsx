@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import './TasksFilter.css';
+import '../App.css';
 
-const TasksFilter = ({ handlefilter }) => {
+type TasksFilterProps = {
+  handlefilter: (e: string) => void;
+};
+
+const TasksFilter: React.FC<TasksFilterProps> = ({ handlefilter }) => {
   const [state, setState] = useState({
     all: 'selected',
     active: '',
     complete: '',
   });
 
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     const text = e.target.innerText;
     if (text === 'All') {
       setState({
@@ -59,11 +62,3 @@ const TasksFilter = ({ handlefilter }) => {
 };
 
 export default TasksFilter;
-
-TasksFilter.defaultPtops = {
-  handlefilter: () => {},
-};
-
-TasksFilter.propTypes = {
-  handlefilter: PropTypes.func,
-};

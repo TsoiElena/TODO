@@ -1,23 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+import '../App.css';
 import NewTaskForm from '../NewTaskForm/NewTaskForm';
 
-function Header({ addNewTask }) {
+type HeaderProps = {
+  addNewTask: (label: string, min: string | number, sec: string | number) => void;
+};
+
+const Header: React.FC<HeaderProps> = ({ addNewTask }) => {
   return (
     <header className="header">
       <h1>todos</h1>
       <NewTaskForm addNewTask={addNewTask} />
     </header>
   );
-}
-
-Header.defaultProps = {
-  addNewTask: () => {},
-};
-
-Header.propTypes = {
-  addNewTask: PropTypes.func,
 };
 
 export default Header;

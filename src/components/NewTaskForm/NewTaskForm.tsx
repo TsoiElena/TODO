@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
-import './NewTaskForm.css';
+import '../App.css';
 
-const NewTaskForm = ({ addNewTask }) => {
+type NewTaskForm = {
+  addNewTask: (label: string, min: string | number, sec: string | number) => void;
+};
+
+const NewTaskForm: React.FC<NewTaskForm> = ({ addNewTask }) => {
   const [state, setState] = useState({
     label: '',
     min: '',
     sec: '',
   });
 
-  const onLabelChange = (e) => {
-    setState((state) => ({ ...state, label: e.target.value }));
+  const onLabelChange = (e: any) => {
+    setState((state) => ({ ...state, label: String(e.target.value) }));
   };
-  const onMinChange = (e) => {
+  const onMinChange = (e: any) => {
+    // @ts-ignore
     setState((state) => ({ ...state, min: Number(e.target.value) }));
   };
-  const onSecChange = (e) => {
+  const onSecChange = (e: any) => {
+    // @ts-ignore
     setState((state) => ({ ...state, sec: Number(e.target.value) }));
   };
-  const onSubmit = (e) => {
+  const onSubmit = (e: any) => {
     e.preventDefault();
     addNewTask(state.label, state.min, state.sec);
     setState({
@@ -40,6 +45,3 @@ const NewTaskForm = ({ addNewTask }) => {
 };
 
 export default NewTaskForm;
-
-NewTaskForm.defaultProps = { addNewTask: () => {} };
-NewTaskForm.propTypes = { addNewTask: PropTypes.func };
